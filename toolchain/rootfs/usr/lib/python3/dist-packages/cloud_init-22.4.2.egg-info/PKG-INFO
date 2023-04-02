@@ -1,0 +1,15 @@
+Metadata-Version: 2.1
+Name: cloud-init
+Version: 22.4.2
+Summary: Cloud instance initialisation magic
+Home-page: http://launchpad.net/cloud-init/
+Author: Scott Moser
+Author-email: scott.moser@canonical.com
+License: Dual-licensed under GPLv3 or Apache 2.0
+Platform: UNKNOWN
+License-File: LICENSE
+License-File: LICENSE-Apache2.0
+License-File: LICENSE-GPLv3
+
+UNKNOWN
+

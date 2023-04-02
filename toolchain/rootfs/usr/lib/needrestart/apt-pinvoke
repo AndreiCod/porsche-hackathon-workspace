@@ -1,0 +1,50 @@
+#!/bin/sh
+
+# needrestart - Restart daemons after library updates.
+#
+# Authors:
+#   Thomas Liske <thomas@fiasko-nw.net>
+#
+# Copyright Holder:
+#   2013 - 2020 (C) Thomas Liske [http://fiasko-nw.net/~thomas/]
+#
+# License:
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2 of the License, or
+#   (at your option) any later version.
+#
+
+RUNDIR=/run/needrestart
+
+# dpkg had an error... exit (silently)
+if [ -e "$RUNDIR/errored" ]; then
+    [ -e "$RUNDIR/unpacked" ] && echo "needrestart is being skipped since dpkg has failed"
+    rm -f "$RUNDIR/errored"
+    exit 0
+fi
+
+if [ -e "$RUNDIR/unpacked" ]; then
+    # check if system is shutting down, see also Debian Bug#914753
+    if [ -d '/run/systemd/system' ]; then
+        sd=$(dbus-send --system --dest=org.freedesktop.login1 \
+                       --print-reply \
+                       /org/freedesktop/login1 \
+                       org.freedesktop.DBus.Properties.Get \
+                       string:org.freedesktop.login1.Manager \
+                       string:PreparingForShutdown 2> /dev/null)
+
+        if [ "$sd" != "${sd% true}" ]; then
+            echo "skipping needrestart since system is preparing for shutdown"
+            exit 0
+        fi
+    fi
+
+    if [ -n "$NEEDRESTART_SUSPEND" ]; then
+        echo "packages have been installed but needrestart is suspended"
+        exit 0
+    fi
+
+    rm -f "$RUNDIR/unpacked"
+    exec /usr/sbin/needrestart "$@"
+fi

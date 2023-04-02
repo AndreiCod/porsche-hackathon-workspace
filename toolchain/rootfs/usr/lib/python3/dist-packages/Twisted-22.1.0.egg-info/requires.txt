@@ -1,0 +1,181 @@
+
+[:platform_system == "Windows"]
+twisted-iocpsupport<2,>=1.0.2
+
+[all_non_platform]
+PyHamcrest>=1.9.0
+appdirs>=1.4.0
+bcrypt>=3.0.0
+cryptography>=2.6
+cython-test-exception-raiser<2,>=1.0.2
+h2<4.0,>=3.0
+idna>=2.4
+priority<2.0,>=1.1.0
+pyasn1
+pyopenssl>=16.0.0
+pyserial>=3.0
+service_identity>=18.1.0
+
+[all_non_platform:platform_system == "Windows"]
+pywin32!=226
+
+[all_non_platform:python_version < "3.7"]
+contextvars<3,>=2.4
+
+[conch]
+appdirs>=1.4.0
+bcrypt>=3.0.0
+cryptography>=2.6
+pyasn1
+
+[contextvars]
+
+[contextvars:python_version < "3.7"]
+contextvars<3,>=2.4
+
+[dev]
+coverage<7,>=6b1
+pyflakes~=2.2
+readthedocs-sphinx-ext~=2.1
+sphinx-rtd-theme~=0.5
+sphinx<6,>=4.1.2
+towncrier~=19.2
+twistedchecker~=0.7
+
+[dev:python_version < "3.10"]
+python-subunit~=1.4
+
+[dev:python_version >= "3.6"]
+pydoctor~=21.9.0
+
+[dev_release]
+readthedocs-sphinx-ext~=2.1
+sphinx-rtd-theme~=0.5
+sphinx<6,>=4.1.2
+towncrier~=19.2
+
+[dev_release:python_version >= "3.6"]
+pydoctor~=21.9.0
+
+[http2]
+h2<4.0,>=3.0
+priority<2.0,>=1.1.0
+
+[macos_platform]
+PyHamcrest>=1.9.0
+appdirs>=1.4.0
+bcrypt>=3.0.0
+cryptography>=2.6
+cython-test-exception-raiser<2,>=1.0.2
+h2<4.0,>=3.0
+idna>=2.4
+priority<2.0,>=1.1.0
+pyasn1
+pyobjc-core
+pyobjc-framework-CFNetwork
+pyobjc-framework-Cocoa
+pyopenssl>=16.0.0
+pyserial>=3.0
+service_identity>=18.1.0
+
+[macos_platform:platform_system == "Windows"]
+pywin32!=226
+
+[macos_platform:python_version < "3.7"]
+contextvars<3,>=2.4
+
+[mypy]
+PyHamcrest>=1.9.0
+appdirs>=1.4.0
+bcrypt>=3.0.0
+coverage<7,>=6b1
+cryptography>=2.6
+cython-test-exception-raiser<2,>=1.0.2
+h2<4.0,>=3.0
+idna>=2.4
+mypy-zope==0.3.4
+mypy==0.930
+priority<2.0,>=1.1.0
+pyasn1
+pyflakes~=2.2
+pyopenssl>=16.0.0
+pyserial>=3.0
+readthedocs-sphinx-ext~=2.1
+service_identity>=18.1.0
+sphinx-rtd-theme~=0.5
+sphinx<6,>=4.1.2
+towncrier~=19.2
+twistedchecker~=0.7
+types-pyOpenSSL
+types-setuptools
+
+[mypy:platform_system == "Windows"]
+pywin32!=226
+
+[mypy:python_version < "3.10"]
+python-subunit~=1.4
+
+[mypy:python_version < "3.7"]
+contextvars<3,>=2.4
+
+[mypy:python_version >= "3.6"]
+pydoctor~=21.9.0
+
+[osx_platform]
+PyHamcrest>=1.9.0
+appdirs>=1.4.0
+bcrypt>=3.0.0
+cryptography>=2.6
+cython-test-exception-raiser<2,>=1.0.2
+h2<4.0,>=3.0
+idna>=2.4
+priority<2.0,>=1.1.0
+pyasn1
+pyobjc-core
+pyobjc-framework-CFNetwork
+pyobjc-framework-Cocoa
+pyopenssl>=16.0.0
+pyserial>=3.0
+service_identity>=18.1.0
+
+[osx_platform:platform_system == "Windows"]
+pywin32!=226
+
+[osx_platform:python_version < "3.7"]
+contextvars<3,>=2.4
+
+[serial]
+pyserial>=3.0
+
+[serial:platform_system == "Windows"]
+pywin32!=226
+
+[test]
+PyHamcrest>=1.9.0
+cython-test-exception-raiser<2,>=1.0.2
+
+[tls]
+idna>=2.4
+pyopenssl>=16.0.0
+service_identity>=18.1.0
+
+[windows_platform]
+PyHamcrest>=1.9.0
+appdirs>=1.4.0
+bcrypt>=3.0.0
+cryptography>=2.6
+cython-test-exception-raiser<2,>=1.0.2
+h2<4.0,>=3.0
+idna>=2.4
+priority<2.0,>=1.1.0
+pyasn1
+pyopenssl>=16.0.0
+pyserial>=3.0
+pywin32!=226
+service_identity>=18.1.0
+
+[windows_platform:platform_system == "Windows"]
+pywin32!=226
+
+[windows_platform:python_version < "3.7"]
+contextvars<3,>=2.4

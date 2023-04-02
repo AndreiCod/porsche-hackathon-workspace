@@ -1,0 +1,6 @@
+
+[tests]
+pytest!=3.3.0,>=3.2.1
+
+[typecheck]
+mypy

@@ -1,0 +1,71 @@
+#!/bin/sh
+
+# needrestart - Restart daemons after library updates.
+#
+# Authors:
+#   Thomas Liske <thomas@fiasko-nw.net>
+#
+# Copyright Holder:
+#   2013 - 2020 (C) Thomas Liske [http://fiasko-nw.net/~thomas/]
+#
+# License:
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this package; if not, write to the Free Software
+#   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+
+# handle verbose mode
+if [ "$1" = "1" ]; then
+    set -x
+fi
+
+# filter for processor signature (and flags if available)
+sig=$(iucode_tool --scan-system 2>&1 | grep -oE '[^[:space:]]+$') #'
+if [ -r /sys/devices/system/cpu/cpu0/microcode/processor_flags ]; then
+    filter="-s $sig,"$(cat /sys/devices/system/cpu/cpu0/microcode/processor_flags)
+else
+    filter="-S"
+fi
+
+# allow local command override
+test -r /etc/needrestart/iucode.sh && . /etc/needrestart/iucode.sh
+
+# early boot initrd (required at least on Arch Linux)
+if type bsdtar > /dev/null 2>&1 ; then
+    imgfiles=""
+    for img in /boot/intel-ucode.img /boot/early_ucode.cpio ; do
+        if [ -r "$img" ]; then
+            imgfiles="$imgfiles $img"
+        fi
+    done
+
+    if [ -n "$imgfiles" ]; then
+        cat $imgfiles | bsdtar -Oxf /dev/stdin | iucode_tool -l $filter -tb - 2>&1
+        exit $?
+    fi
+fi
+
+# look for microcode updates in the filesystem
+IUCODE_TOOL_EXTRA_OPTIONS=""
+
+test -r /etc/default/intel-microcode && . /etc/default/intel-microcode
+
+# do not scan if adding Intel microcode to initrd is disabled
+test "$IUCODE_TOOL_INITRAMFS" = "no" && exit 0
+
+# run iucode_tool to scan for microcodes
+if [ -r /usr/share/misc/intel-microcode* ]; then
+    exec iucode_tool -l $filter --ignore-broken -tb /lib/firmware/intel-ucode -ta /usr/share/misc/intel-microcode* 2>&1
+    exit $?
+fi
+
+iucode_tool -l $filter --ignore-broken $IUCODE_TOOL_EXTRA_OPTIONS -tb /lib/firmware/intel-ucode 2>&1 | grep "$sig"

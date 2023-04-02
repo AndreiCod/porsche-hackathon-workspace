@@ -1,0 +1,3 @@
+C:/Users/Codrin/Downloads/Workplace/project/build_dir/CMakeFiles/StudentContest.dir
+C:/Users/Codrin/Downloads/Workplace/project/build_dir/CMakeFiles/edit_cache.dir
+C:/Users/Codrin/Downloads/Workplace/project/build_dir/CMakeFiles/rebuild_cache.dir
